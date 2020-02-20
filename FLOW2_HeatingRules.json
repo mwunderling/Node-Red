@@ -1,0 +1,407 @@
+[
+    {
+        "id": "91937d93.3cbcb",
+        "type": "server-state-changed",
+        "z": "4c6bc2a5.5a2c3c",
+        "name": "Office Door Temp <=69",
+        "server": "bea6337e.54ee7",
+        "version": 1,
+        "entityidfilter": "sensor.office_door_sensor_temperature",
+        "entityidfiltertype": "exact",
+        "outputinitially": false,
+        "state_type": "num",
+        "haltifstate": "69",
+        "halt_if_type": "num",
+        "halt_if_compare": "lte",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "x": 182,
+        "y": 682,
+        "wires": [
+            [
+                "92780041.ab13a"
+            ],
+            [
+                "92780041.ab13a"
+            ]
+        ]
+    },
+    {
+        "id": "b09b5f81.be339",
+        "type": "api-current-state",
+        "z": "4c6bc2a5.5a2c3c",
+        "name": "Office Temp >=72?",
+        "server": "bea6337e.54ee7",
+        "version": 1,
+        "outputs": 2,
+        "halt_if": "72",
+        "halt_if_type": "num",
+        "halt_if_compare": "gte",
+        "override_topic": false,
+        "entity_id": "sensor.office_door_sensor_temperature",
+        "state_type": "num",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 1153,
+        "y": 642,
+        "wires": [
+            [
+                "26e006eb.aaccca"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "13d3385.283b9c8",
+        "type": "api-current-state",
+        "z": "4c6bc2a5.5a2c3c",
+        "name": "Office Temp <=69?",
+        "server": "bea6337e.54ee7",
+        "version": 1,
+        "outputs": 2,
+        "halt_if": "69",
+        "halt_if_type": "num",
+        "halt_if_compare": "lte",
+        "override_topic": false,
+        "entity_id": "sensor.office_door_sensor_temperature",
+        "state_type": "num",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 924,
+        "y": 636,
+        "wires": [
+            [
+                "eecff066.70f63"
+            ],
+            [
+                "b09b5f81.be339"
+            ]
+        ]
+    },
+    {
+        "id": "666538d1.8e7f88",
+        "type": "api-call-service",
+        "z": "4c6bc2a5.5a2c3c",
+        "name": "Office Heater - ON",
+        "server": "bea6337e.54ee7",
+        "version": 1,
+        "service_domain": "switch",
+        "service": "turn_on",
+        "entityId": "switch.office_heater",
+        "data": "",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 1571,
+        "y": 602,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c927c1c6.a1d7",
+        "type": "api-current-state",
+        "z": "4c6bc2a5.5a2c3c",
+        "name": "Office Temp >=62?",
+        "server": "bea6337e.54ee7",
+        "version": 1,
+        "outputs": 2,
+        "halt_if": "62",
+        "halt_if_type": "num",
+        "halt_if_compare": "gte",
+        "override_topic": false,
+        "entity_id": "sensor.office_door_sensor_temperature",
+        "state_type": "num",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 1153,
+        "y": 693,
+        "wires": [
+            [
+                "26e006eb.aaccca"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "c2e5fadb.8bc2b8",
+        "type": "api-call-service",
+        "z": "4c6bc2a5.5a2c3c",
+        "name": "Office Heater - OFF",
+        "server": "bea6337e.54ee7",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "switch",
+        "service": "turn_off",
+        "entityId": "switch.office_heater",
+        "data": "",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 1572,
+        "y": 542,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "cf975988.db3728",
+        "type": "api-current-state",
+        "z": "4c6bc2a5.5a2c3c",
+        "name": "Office Temp <=59?",
+        "server": "bea6337e.54ee7",
+        "version": 1,
+        "outputs": 2,
+        "halt_if": "59",
+        "halt_if_type": "num",
+        "halt_if_compare": "lte",
+        "override_topic": false,
+        "entity_id": "sensor.office_door_sensor_temperature",
+        "state_type": "num",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 921,
+        "y": 687,
+        "wires": [
+            [
+                "eecff066.70f63"
+            ],
+            [
+                "c927c1c6.a1d7"
+            ]
+        ]
+    },
+    {
+        "id": "3e6cf1a9.53644e",
+        "type": "api-current-state",
+        "z": "4c6bc2a5.5a2c3c",
+        "name": "Heater Override ON?",
+        "server": "bea6337e.54ee7",
+        "version": 1,
+        "outputs": 2,
+        "halt_if": "Off",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "override_topic": false,
+        "entity_id": "input_boolean.office_heater_override",
+        "state_type": "str",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 675,
+        "y": 680,
+        "wires": [
+            [
+                "385ab19.671404e"
+            ],
+            [
+                "cf975988.db3728"
+            ]
+        ]
+    },
+    {
+        "id": "385ab19.671404e",
+        "type": "trigger",
+        "z": "4c6bc2a5.5a2c3c",
+        "op1": "",
+        "op2": "Off",
+        "op1type": "nul",
+        "op2type": "str",
+        "duration": "30",
+        "extend": true,
+        "units": "min",
+        "reset": "",
+        "bytopic": "all",
+        "name": "Delay trigger 30mins",
+        "x": 936,
+        "y": 548,
+        "wires": [
+            [
+                "26e006eb.aaccca"
+            ]
+        ]
+    },
+    {
+        "id": "a3cacda8.9f4a4",
+        "type": "api-current-state",
+        "z": "4c6bc2a5.5a2c3c",
+        "name": "Heater Override ON?",
+        "server": "bea6337e.54ee7",
+        "version": 1,
+        "outputs": 2,
+        "halt_if": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "override_topic": false,
+        "entity_id": "input_boolean.office_heater_override",
+        "state_type": "str",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 676,
+        "y": 630,
+        "wires": [
+            [
+                "385ab19.671404e"
+            ],
+            [
+                "13d3385.283b9c8"
+            ]
+        ]
+    },
+    {
+        "id": "eecff066.70f63",
+        "type": "api-current-state",
+        "z": "4c6bc2a5.5a2c3c",
+        "name": "Is Heater ON?",
+        "server": "bea6337e.54ee7",
+        "version": 1,
+        "outputs": 2,
+        "halt_if": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "override_topic": false,
+        "entity_id": "switch.office_heater",
+        "state_type": "str",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 1143,
+        "y": 595,
+        "wires": [
+            [],
+            [
+                "666538d1.8e7f88"
+            ]
+        ]
+    },
+    {
+        "id": "26e006eb.aaccca",
+        "type": "api-current-state",
+        "z": "4c6bc2a5.5a2c3c",
+        "name": "Is Heater ON?",
+        "server": "bea6337e.54ee7",
+        "version": 1,
+        "outputs": 2,
+        "halt_if": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "override_topic": false,
+        "entity_id": "switch.office_heater",
+        "state_type": "str",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 1385,
+        "y": 549,
+        "wires": [
+            [
+                "c2e5fadb.8bc2b8"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "92780041.ab13a",
+        "type": "api-current-state",
+        "z": "4c6bc2a5.5a2c3c",
+        "name": "Low Heat Mode OFF?",
+        "server": "bea6337e.54ee7",
+        "version": 1,
+        "outputs": 2,
+        "halt_if": "off",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "override_topic": false,
+        "entity_id": "input_boolean.office_low_heat",
+        "state_type": "str",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 452,
+        "y": 657,
+        "wires": [
+            [
+                "a3cacda8.9f4a4"
+            ],
+            [
+                "3e6cf1a9.53644e"
+            ]
+        ]
+    },
+    {
+        "id": "bb3f90d.472da7",
+        "type": "server-state-changed",
+        "z": "4c6bc2a5.5a2c3c",
+        "name": "Low Heat Mode Change",
+        "server": "bea6337e.54ee7",
+        "version": 1,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "input_boolean.office_low_heat",
+        "entityidfiltertype": "exact",
+        "outputinitially": false,
+        "state_type": "str",
+        "haltifstate": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "x": 173,
+        "y": 630,
+        "wires": [
+            [
+                "92780041.ab13a"
+            ],
+            [
+                "92780041.ab13a"
+            ]
+        ]
+    },
+    {
+        "id": "bea6337e.54ee7",
+        "type": "server",
+        "z": "",
+        "name": "Home Assistant",
+        "legacy": false,
+        "hassio": false,
+        "rejectUnauthorizedCerts": true,
+        "ha_boolean": "y|yes|true|on|home|open",
+        "connectionDelay": true
+    }
+]
