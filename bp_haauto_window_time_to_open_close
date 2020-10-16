@@ -1,0 +1,605 @@
+[{
+    "id": "60001486.4efdcc",
+    "type": "comment",
+    "z": "37b9ed44.115ca2",
+    "name": "Notifications to Open the Windows",
+    "info": "",
+    "x": 185,
+    "y": 1951,
+    "wires": []
+}, {
+    "id": "1014635.50dcd9d",
+    "type": "server-state-changed",
+    "z": "37b9ed44.115ca2",
+    "name": "Outside Temp >=72",
+    "server": "bea6337e.54ee7",
+    "version": 1,
+    "exposeToHomeAssistant": false,
+    "haConfig": [{
+        "property": "name",
+        "value": ""
+    }, {
+        "property": "icon",
+        "value": ""
+    }],
+    "entityidfilter": "sensor.dark_sky_temperature",
+    "entityidfiltertype": "exact",
+    "outputinitially": false,
+    "state_type": "num",
+    "haltifstate": "72",
+    "halt_if_type": "num",
+    "halt_if_compare": "gte",
+    "outputs": 2,
+    "output_only_on_state_change": true,
+    "x": 181,
+    "y": 2123,
+    "wires": [
+        ["9a2f12ef.169c"],
+        []
+    ]
+}, {
+    "id": "f82001f6.50273",
+    "type": "time-range-switch",
+    "z": "37b9ed44.115ca2",
+    "name": "Sunrise - 3:14PM",
+    "lat": "37.338167",
+    "lon": "-121.885388",
+    "startTime": "sunrise",
+    "endTime": "15:14:59",
+    "startOffset": 0,
+    "endOffset": 0,
+    "x": 1420,
+    "y": 2067,
+    "wires": [
+        ["461ce3b2.0593ac"],
+        []
+    ]
+}, {
+    "id": "2fe4d7ea.01c928",
+    "type": "time-range-switch",
+    "z": "37b9ed44.115ca2",
+    "name": "3:15PM - 9:30PM",
+    "lat": "37.338167",
+    "lon": "-121.885388",
+    "startTime": "15:15",
+    "endTime": "21:30",
+    "startOffset": 0,
+    "endOffset": 0,
+    "x": 1419,
+    "y": 2115,
+    "wires": [
+        ["9a89963.5352e68"],
+        []
+    ]
+}, {
+    "id": "9a2f12ef.169c",
+    "type": "api-current-state",
+    "z": "37b9ed44.115ca2",
+    "name": "Someone Home?",
+    "server": "bea6337e.54ee7",
+    "version": 1,
+    "outputs": 2,
+    "halt_if": "home",
+    "halt_if_type": "str",
+    "halt_if_compare": "is",
+    "override_topic": false,
+    "entity_id": "group.home",
+    "state_type": "str",
+    "state_location": "payload",
+    "override_payload": "msg",
+    "entity_location": "data",
+    "override_data": "msg",
+    "blockInputOverrides": false,
+    "x": 380,
+    "y": 2159,
+    "wires": [
+        ["1cbd172b.f3a679", "e23c73c1.a0daf"],
+        []
+    ]
+}, {
+    "id": "1cbd172b.f3a679",
+    "type": "api-current-state",
+    "z": "37b9ed44.115ca2",
+    "name": "Inside Temp",
+    "server": "bea6337e.54ee7",
+    "version": 1,
+    "outputs": 1,
+    "halt_if": "",
+    "halt_if_type": "num",
+    "halt_if_compare": "is",
+    "override_topic": false,
+    "entity_id": "sensor.ecobee_temperature",
+    "state_type": "num",
+    "state_location": "payload",
+    "override_payload": "msg",
+    "entity_location": "data",
+    "override_data": "msg",
+    "blockInputOverrides": false,
+    "x": 599,
+    "y": 2078,
+    "wires": [
+        ["95bc133b.0dcfa"]
+    ]
+}, {
+    "id": "78eed924.cfa948",
+    "type": "join",
+    "z": "37b9ed44.115ca2",
+    "name": "",
+    "mode": "custom",
+    "build": "object",
+    "property": "payload",
+    "propertyType": "msg",
+    "key": "topic",
+    "joiner": "\\n",
+    "joinerType": "str",
+    "accumulate": false,
+    "timeout": "",
+    "count": "2",
+    "reduceRight": false,
+    "reduceExp": "",
+    "reduceInit": "",
+    "reduceInitType": "",
+    "reduceFixup": "",
+    "x": 930,
+    "y": 2093,
+    "wires": [
+        ["2e017b72.5c9f94"]
+    ]
+}, {
+    "id": "2e017b72.5c9f94",
+    "type": "function",
+    "z": "37b9ed44.115ca2",
+    "name": "Compare Temps",
+    "func": "// this is passed a payload which is an object with\n// properties outside_temp and inside_temp\nif (msg.payload.outside_temp > msg.payload.inside_temp + 2) {\n    msg.payload = 1; //Morning Test Condition\n} else {\n    msg.payload = 2; //Afternoon Test Condition\n}\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "x": 1089,
+    "y": 2093,
+    "wires": [
+        ["b1130bc.f261ef8"]
+    ]
+}, {
+    "id": "b1130bc.f261ef8",
+    "type": "switch",
+    "z": "37b9ed44.115ca2",
+    "name": "",
+    "property": "payload",
+    "propertyType": "msg",
+    "rules": [{
+        "t": "eq",
+        "v": "1",
+        "vt": "str"
+    }, {
+        "t": "eq",
+        "v": "2",
+        "vt": "str"
+    }],
+    "checkall": "true",
+    "repair": false,
+    "outputs": 2,
+    "x": 1252,
+    "y": 2093,
+    "wires": [
+        ["f82001f6.50273"],
+        ["2fe4d7ea.01c928"]
+    ],
+    "outputLabels": ["ON", "OFF"]
+}, {
+    "id": "95bc133b.0dcfa",
+    "type": "change",
+    "z": "37b9ed44.115ca2",
+    "name": "inside_temp",
+    "rules": [{
+        "t": "set",
+        "p": "topic",
+        "pt": "msg",
+        "to": "inside_temp",
+        "tot": "str"
+    }],
+    "action": "",
+    "property": "",
+    "from": "",
+    "to": "",
+    "reg": false,
+    "x": 755,
+    "y": 2078,
+    "wires": [
+        ["78eed924.cfa948"]
+    ]
+}, {
+    "id": "4e471ab9.98a154",
+    "type": "change",
+    "z": "37b9ed44.115ca2",
+    "name": "outside_temp",
+    "rules": [{
+        "t": "set",
+        "p": "topic",
+        "pt": "msg",
+        "to": "outside_temp",
+        "tot": "str"
+    }],
+    "action": "",
+    "property": "",
+    "from": "",
+    "to": "",
+    "reg": false,
+    "x": 780,
+    "y": 2128,
+    "wires": [
+        ["78eed924.cfa948"]
+    ]
+}, {
+    "id": "e23c73c1.a0daf",
+    "type": "api-current-state",
+    "z": "37b9ed44.115ca2",
+    "name": "Outside Temp",
+    "server": "bea6337e.54ee7",
+    "version": 1,
+    "outputs": 1,
+    "halt_if": "",
+    "halt_if_type": "num",
+    "halt_if_compare": "is",
+    "override_topic": false,
+    "entity_id": "sensor.dark_sky_temperature",
+    "state_type": "num",
+    "state_location": "payload",
+    "override_payload": "msg",
+    "entity_location": "data",
+    "override_data": "msg",
+    "blockInputOverrides": false,
+    "x": 606,
+    "y": 2127,
+    "wires": [
+        ["4e471ab9.98a154"]
+    ]
+}, {
+    "id": "9a89963.5352e68",
+    "type": "api-current-state",
+    "z": "37b9ed44.115ca2",
+    "name": "Open  Notification Already Sent?",
+    "server": "bea6337e.54ee7",
+    "version": 1,
+    "outputs": 2,
+    "halt_if": "off",
+    "halt_if_type": "str",
+    "halt_if_compare": "is",
+    "override_topic": true,
+    "entity_id": "input_boolean.notify_to_open",
+    "state_type": "str",
+    "state_location": "payload",
+    "override_payload": "msg",
+    "entity_location": "data",
+    "override_data": "msg",
+    "blockInputOverrides": true,
+    "x": 1700,
+    "y": 2114,
+    "wires": [
+        ["4afc827.56e3c7c", "a7571e7c.dd57b"],
+        []
+    ]
+}, {
+    "id": "461ce3b2.0593ac",
+    "type": "api-current-state",
+    "z": "37b9ed44.115ca2",
+    "name": "Close Notification Already Sent?",
+    "server": "bea6337e.54ee7",
+    "version": 1,
+    "outputs": 2,
+    "halt_if": "off",
+    "halt_if_type": "str",
+    "halt_if_compare": "is",
+    "override_topic": false,
+    "entity_id": "input_boolean.notify_to_close",
+    "state_type": "str",
+    "state_location": "data",
+    "override_payload": "msg",
+    "entity_location": "data",
+    "override_data": "msg",
+    "blockInputOverrides": false,
+    "x": 1699,
+    "y": 2066,
+    "wires": [
+        ["6b33ddbd.e8c4f4", "ee5ee712.d33678"],
+        []
+    ]
+}, {
+    "id": "4afc827.56e3c7c",
+    "type": "api-call-service",
+    "z": "37b9ed44.115ca2",
+    "name": "Open Windows Flag - On",
+    "server": "bea6337e.54ee7",
+    "version": 1,
+    "debugenabled": false,
+    "service_domain": "input_boolean",
+    "service": "turn_on",
+    "entityId": "input_boolean.notify_to_open",
+    "data": "",
+    "dataType": "json",
+    "mergecontext": "",
+    "output_location": "",
+    "output_location_type": "none",
+    "mustacheAltTags": false,
+    "x": 1985,
+    "y": 2165,
+    "wires": [
+        []
+    ]
+}, {
+    "id": "6b33ddbd.e8c4f4",
+    "type": "api-call-service",
+    "z": "37b9ed44.115ca2",
+    "name": "Close Windows Flag - On",
+    "server": "bea6337e.54ee7",
+    "version": 1,
+    "debugenabled": false,
+    "service_domain": "input_boolean",
+    "service": "turn_on",
+    "entityId": "input_boolean.notify_to_close",
+    "data": "",
+    "dataType": "json",
+    "mergecontext": "",
+    "output_location": "",
+    "output_location_type": "none",
+    "mustacheAltTags": false,
+    "x": 1987,
+    "y": 2013,
+    "wires": [
+        []
+    ]
+}, {
+    "id": "5a837bd9.f39d84",
+    "type": "server-state-changed",
+    "z": "37b9ed44.115ca2",
+    "name": "Change to Home",
+    "server": "bea6337e.54ee7",
+    "version": 1,
+    "exposeToHomeAssistant": false,
+    "haConfig": [{
+        "property": "name",
+        "value": ""
+    }, {
+        "property": "icon",
+        "value": ""
+    }],
+    "entityidfilter": "group.home",
+    "entityidfiltertype": "exact",
+    "outputinitially": false,
+    "state_type": "str",
+    "haltifstate": "home",
+    "halt_if_type": "str",
+    "halt_if_compare": "is",
+    "outputs": 2,
+    "output_only_on_state_change": true,
+    "x": 170,
+    "y": 2071,
+    "wires": [
+        ["1cbd172b.f3a679", "e23c73c1.a0daf"],
+        []
+    ]
+}, {
+    "id": "39d276fd.5f0d8a",
+    "type": "api-current-state",
+    "z": "37b9ed44.115ca2",
+    "name": "Mark Home?",
+    "server": "bea6337e.54ee7",
+    "version": 1,
+    "outputs": 2,
+    "halt_if": "home",
+    "halt_if_type": "str",
+    "halt_if_compare": "is",
+    "override_topic": false,
+    "entity_id": "person.mark",
+    "state_type": "str",
+    "state_location": "payload",
+    "override_payload": "msg",
+    "entity_location": "topic",
+    "override_data": "msg",
+    "blockInputOverrides": false,
+    "x": 2194,
+    "y": 2064,
+    "wires": [
+        ["90eb4577.48d5c8"],
+        []
+    ]
+}, {
+    "id": "638d20bf.11c8b",
+    "type": "api-current-state",
+    "z": "37b9ed44.115ca2",
+    "name": "Melissa Home?",
+    "server": "bea6337e.54ee7",
+    "version": 1,
+    "outputs": 2,
+    "halt_if": "home",
+    "halt_if_type": "str",
+    "halt_if_compare": "is",
+    "override_topic": false,
+    "entity_id": "person.melissa",
+    "state_type": "str",
+    "state_location": "payload",
+    "override_payload": "msg",
+    "entity_location": "topic",
+    "override_data": "msg",
+    "blockInputOverrides": false,
+    "x": 2203,
+    "y": 2116,
+    "wires": [
+        ["90eb4577.48d5c8"],
+        []
+    ]
+}, {
+    "id": "dae490f.482007",
+    "type": "change",
+    "z": "37b9ed44.115ca2",
+    "name": "",
+    "rules": [{
+        "t": "change",
+        "p": "topic",
+        "pt": "msg",
+        "from": "person.mark",
+        "fromt": "str",
+        "to": "mobile_app_iphonexr_mark",
+        "tot": "str"
+    }, {
+        "t": "change",
+        "p": "topic",
+        "pt": "msg",
+        "from": "person.melissa",
+        "fromt": "str",
+        "to": "mobile_app_iphonexr_melissa",
+        "tot": "str"
+    }],
+    "action": "",
+    "property": "",
+    "from": "",
+    "to": "",
+    "reg": false,
+    "x": 2639,
+    "y": 2086,
+    "wires": [
+        ["6a722009.5794f", "cc5a2471.376968", "5062e3a.cd5cc1c"]
+    ]
+}, {
+    "id": "90eb4577.48d5c8",
+    "type": "change",
+    "z": "37b9ed44.115ca2",
+    "name": "",
+    "rules": [{
+        "t": "move",
+        "p": "topic.entity_id",
+        "pt": "msg",
+        "to": "topic",
+        "tot": "msg"
+    }],
+    "action": "",
+    "property": "",
+    "from": "",
+    "to": "",
+    "reg": false,
+    "x": 2435,
+    "y": 2085,
+    "wires": [
+        ["dae490f.482007"]
+    ]
+}, {
+    "id": "a7571e7c.dd57b",
+    "type": "change",
+    "z": "37b9ed44.115ca2",
+    "name": "Set Open Msg",
+    "rules": [{
+        "t": "set",
+        "p": "msg_type",
+        "pt": "flow",
+        "to": "Notification",
+        "tot": "str"
+    }, {
+        "t": "set",
+        "p": "msg_text",
+        "pt": "flow",
+        "to": "Ok to Open Doors & Windows",
+        "tot": "str"
+    }],
+    "action": "",
+    "property": "",
+    "from": "",
+    "to": "",
+    "reg": false,
+    "x": 1956,
+    "y": 2114,
+    "wires": [
+        ["39d276fd.5f0d8a", "638d20bf.11c8b"]
+    ]
+}, {
+    "id": "ee5ee712.d33678",
+    "type": "change",
+    "z": "37b9ed44.115ca2",
+    "name": "Set Close Msg",
+    "rules": [{
+        "t": "set",
+        "p": "msg_type",
+        "pt": "flow",
+        "to": "Notification",
+        "tot": "str"
+    }, {
+        "t": "set",
+        "p": "msg_text",
+        "pt": "flow",
+        "to": "Time to Close Doors & Windows",
+        "tot": "str"
+    }],
+    "action": "",
+    "property": "",
+    "from": "",
+    "to": "",
+    "reg": false,
+    "x": 1955,
+    "y": 2063,
+    "wires": [
+        ["638d20bf.11c8b", "39d276fd.5f0d8a"]
+    ]
+}, {
+    "id": "6a722009.5794f",
+    "type": "link out",
+    "z": "37b9ed44.115ca2",
+    "name": "",
+    "links": ["c0307220.88946"],
+    "x": 2790,
+    "y": 2137,
+    "wires": []
+}, {
+    "id": "5062e3a.cd5cc1c",
+    "type": "api-call-service",
+    "z": "37b9ed44.115ca2",
+    "name": "Announce Family Room",
+    "server": "bea6337e.54ee7",
+    "version": 1,
+    "debugenabled": false,
+    "service_domain": "notify",
+    "service": "alexa_media_echo_family_room",
+    "entityId": "",
+    "data": "{\"message\":\"{{flow.msg_text}}\",\"data\":{\"type\":\"tts\"}}",
+    "dataType": "json",
+    "mergecontext": "",
+    "output_location": "",
+    "output_location_type": "none",
+    "mustacheAltTags": false,
+    "x": 2840,
+    "y": 2002,
+    "wires": [
+        []
+    ]
+}, {
+    "id": "cc5a2471.376968",
+    "type": "api-call-service",
+    "z": "37b9ed44.115ca2",
+    "name": "Announce Office",
+    "server": "bea6337e.54ee7",
+    "version": 1,
+    "debugenabled": false,
+    "service_domain": "notify",
+    "service": "alexa_media_echodot_office",
+    "entityId": "",
+    "data": "{\"message\":\"{{flow.msg_text}}\",\"data\":{\"type\":\"tts\"}}",
+    "dataType": "json",
+    "mergecontext": "",
+    "output_location": "",
+    "output_location_type": "none",
+    "mustacheAltTags": false,
+    "x": 2810,
+    "y": 2056,
+    "wires": [
+        []
+    ]
+}, {
+    "id": "bea6337e.54ee7",
+    "type": "server",
+    "z": "",
+    "name": "Home Assistant",
+    "legacy": false,
+    "addon": false,
+    "rejectUnauthorizedCerts": true,
+    "ha_boolean": "y|yes|true|on|home|open",
+    "connectionDelay": true,
+    "cacheJson": true
+}]
