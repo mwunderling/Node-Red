@@ -1,6 +1,9 @@
-# Node-Red
- The two flows in this repository prepended with FLOW1 & FLOW2 are discussed in a blog post [here](https://mwunderling.com/blog/smartheating.html)
+# Node-RED Examples
+ These are automation examples I am using in my Home Assistant environment.
+ 
+- bp_heating examples discussed [here](https://mwunderling.com/blog/smartheating.html)
+- bp_haauto examples discussed [here](https://mwunderling.com)
 
- If you are interested in loading them into your Node-Red instance copy each in their entirety and then import in Node-Red.
+ These are importable into Node-RED.
 
  
