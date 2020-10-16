@@ -1,0 +1,385 @@
+[{
+    "id": "8fa00472.a8baa8",
+    "type": "time-range-switch",
+    "z": "37b9ed44.115ca2",
+    "name": "",
+    "lat": "37.286569",
+    "lon": "-121.990040",
+    "startTime": "sunset",
+    "endTime": "sunrise",
+    "startOffset": 0,
+    "endOffset": 0,
+    "x": 568,
+    "y": 1211,
+    "wires": [
+        ["20f9a889.84c748"],
+        []
+    ]
+}, {
+    "id": "eb0b7ee8.61b3f",
+    "type": "server-state-changed",
+    "z": "37b9ed44.115ca2",
+    "name": "Garage Door Open?",
+    "server": "bea6337e.54ee7",
+    "version": 1,
+    "exposeToHomeAssistant": false,
+    "haConfig": [{
+        "property": "name",
+        "value": ""
+    }, {
+        "property": "icon",
+        "value": ""
+    }],
+    "entityidfilter": "binary_sensor.garage_door_sensor_contact",
+    "entityidfiltertype": "exact",
+    "outputinitially": false,
+    "state_type": "str",
+    "haltifstate": "on",
+    "halt_if_type": "str",
+    "halt_if_compare": "is",
+    "outputs": 2,
+    "output_only_on_state_change": true,
+    "x": 167,
+    "y": 1211,
+    "wires": [
+        ["5ab89d23.39a4c4"],
+        []
+    ]
+}, {
+    "id": "20f9a889.84c748",
+    "type": "api-current-state",
+    "z": "37b9ed44.115ca2",
+    "name": "Garage door still OPEN?",
+    "server": "bea6337e.54ee7",
+    "version": 1,
+    "outputs": 2,
+    "halt_if": "on",
+    "halt_if_type": "str",
+    "halt_if_compare": "is",
+    "override_topic": false,
+    "entity_id": "binary_sensor.garage_door_sensor_contact",
+    "state_type": "str",
+    "state_location": "payload",
+    "override_payload": "msg",
+    "entity_location": "data",
+    "override_data": "msg",
+    "blockInputOverrides": false,
+    "x": 827,
+    "y": 1211,
+    "wires": [
+        ["530caab3.95d834", "71f6c0a.4077c4"],
+        []
+    ]
+}, {
+    "id": "5ab89d23.39a4c4",
+    "type": "trigger",
+    "z": "37b9ed44.115ca2",
+    "name": "Delay trigger 10mins",
+    "op1": "",
+    "op2": "open",
+    "op1type": "nul",
+    "op2type": "str",
+    "duration": "10",
+    "extend": true,
+    "units": "min",
+    "reset": "",
+    "bytopic": "all",
+    "outputs": 1,
+    "x": 373,
+    "y": 1211,
+    "wires": [
+        ["8fa00472.a8baa8"]
+    ]
+}, {
+    "id": "dfc54b0e.80cbf8",
+    "type": "comment",
+    "z": "37b9ed44.115ca2",
+    "name": "Garage Door Notifications",
+    "info": "Performs 2 functions:\n1) Notifies the house if the garage door is left open for 10mins between suset and sunrise\n2) Sends door open/close state notification to my phone whenever someone leaves and the house is unoccupied",
+    "x": 143,
+    "y": 1000,
+    "wires": []
+}, {
+    "id": "fcc9ad9f.aac75",
+    "type": "comment",
+    "z": "37b9ed44.115ca2",
+    "name": "UC: @home, forget to close garage door",
+    "info": "",
+    "x": 236,
+    "y": 1176,
+    "wires": []
+}, {
+    "id": "761b7ef1.e9d9e",
+    "type": "trigger-state",
+    "z": "37b9ed44.115ca2",
+    "name": "Trigger: Mark/Melissa Leave",
+    "server": "bea6337e.54ee7",
+    "exposeToHomeAssistant": false,
+    "haConfig": [{
+        "property": "name",
+        "value": ""
+    }, {
+        "property": "icon",
+        "value": ""
+    }],
+    "entityid": "person.mark, person.melissa",
+    "entityidfiltertype": "substring",
+    "debugenabled": false,
+    "constraints": [{
+        "targetType": "this_entity",
+        "targetValue": "",
+        "propertyType": "current_state",
+        "comparatorType": "is_not",
+        "comparatorValueDatatype": "str",
+        "comparatorValue": "home",
+        "propertyValue": "new_state.state"
+    }, {
+        "targetType": "this_entity",
+        "targetValue": "",
+        "propertyType": "previous_state",
+        "comparatorType": "is",
+        "comparatorValueDatatype": "str",
+        "comparatorValue": "home",
+        "propertyValue": "old_state.state"
+    }, {
+        "targetType": "entity_id",
+        "targetValue": "binary_sensor.garage_door_sensor_contact",
+        "propertyType": "current_state",
+        "comparatorType": "is",
+        "comparatorValueDatatype": "str",
+        "comparatorValue": "on",
+        "propertyValue": "new_state.state"
+    }],
+    "outputs": 2,
+    "customoutputs": [],
+    "outputinitially": false,
+    "state_type": "str",
+    "x": 196,
+    "y": 1091,
+    "wires": [
+        ["58a5f808.a33a08"],
+        []
+    ]
+}, {
+    "id": "58a5f808.a33a08",
+    "type": "change",
+    "z": "37b9ed44.115ca2",
+    "name": "Swap msg.topics",
+    "rules": [{
+        "t": "change",
+        "p": "topic",
+        "pt": "msg",
+        "from": "person.mark",
+        "fromt": "str",
+        "to": "mobile_app_iphonexr_mark",
+        "tot": "str"
+    }, {
+        "t": "change",
+        "p": "topic",
+        "pt": "msg",
+        "from": "person.melissa",
+        "fromt": "str",
+        "to": "mobile_app_iphonexr_melissa",
+        "tot": "str"
+    }],
+    "action": "",
+    "property": "",
+    "from": "",
+    "to": "",
+    "reg": false,
+    "x": 511,
+    "y": 1091,
+    "wires": [
+        ["d1f78bfe.c03cf8"]
+    ]
+}, {
+    "id": "d1f78bfe.c03cf8",
+    "type": "api-call-service",
+    "z": "37b9ed44.115ca2",
+    "name": "Notify Departing Phones",
+    "server": "bea6337e.54ee7",
+    "version": 1,
+    "debugenabled": false,
+    "service_domain": "notify",
+    "service": "{{topic}}",
+    "entityId": "",
+    "data": "{\"message\":\"The garage door is still open\",\"title\":\"Alert!\",\"data\":{\"push\":{\"sound\":\"US-EN-Daisy-Garage-Door-Open.wav\"}}}",
+    "dataType": "json",
+    "mergecontext": "",
+    "output_location": "",
+    "output_location_type": "none",
+    "mustacheAltTags": false,
+    "x": 730,
+    "y": 1091,
+    "wires": [
+        []
+    ]
+}, {
+    "id": "530caab3.95d834",
+    "type": "api-current-state",
+    "z": "37b9ed44.115ca2",
+    "name": "Mark Home?",
+    "server": "bea6337e.54ee7",
+    "version": 1,
+    "outputs": 2,
+    "halt_if": "home",
+    "halt_if_type": "str",
+    "halt_if_compare": "is",
+    "override_topic": false,
+    "entity_id": "person.mark",
+    "state_type": "str",
+    "state_location": "payload",
+    "override_payload": "msg",
+    "entity_location": "topic",
+    "override_data": "msg",
+    "blockInputOverrides": false,
+    "x": 1038,
+    "y": 1179,
+    "wires": [
+        ["fd01cf67.9d1e7"],
+        []
+    ]
+}, {
+    "id": "71f6c0a.4077c4",
+    "type": "api-current-state",
+    "z": "37b9ed44.115ca2",
+    "name": "Melissa Home?",
+    "server": "bea6337e.54ee7",
+    "version": 1,
+    "outputs": 2,
+    "halt_if": "home",
+    "halt_if_type": "str",
+    "halt_if_compare": "is",
+    "override_topic": false,
+    "entity_id": "person.melissa",
+    "state_type": "str",
+    "state_location": "payload",
+    "override_payload": "msg",
+    "entity_location": "topic",
+    "override_data": "msg",
+    "blockInputOverrides": false,
+    "x": 1047,
+    "y": 1231,
+    "wires": [
+        ["fd01cf67.9d1e7"],
+        []
+    ]
+}, {
+    "id": "49d3943c.371d7c",
+    "type": "change",
+    "z": "37b9ed44.115ca2",
+    "name": "Msg Parts",
+    "rules": [{
+        "t": "change",
+        "p": "topic.entity_id",
+        "pt": "msg",
+        "from": "person.mark",
+        "fromt": "str",
+        "to": "mobile_app_iphonexr_mark",
+        "tot": "str"
+    }, {
+        "t": "change",
+        "p": "topic.entity_id",
+        "pt": "msg",
+        "from": "person.melissa",
+        "fromt": "str",
+        "to": "mobile_app_iphonexr_melissa",
+        "tot": "str"
+    }, {
+        "t": "set",
+        "p": "msg_type",
+        "pt": "flow",
+        "to": "Alert!",
+        "tot": "str"
+    }, {
+        "t": "set",
+        "p": "msg_text",
+        "pt": "flow",
+        "to": "The garage door is still open!",
+        "tot": "str"
+    }],
+    "action": "",
+    "property": "",
+    "from": "",
+    "to": "",
+    "reg": false,
+    "x": 1463,
+    "y": 1201,
+    "wires": [
+        ["d86e52d9.a0395", "cdc58610.6f4248"]
+    ]
+}, {
+    "id": "fd01cf67.9d1e7",
+    "type": "change",
+    "z": "37b9ed44.115ca2",
+    "name": "",
+    "rules": [{
+        "t": "move",
+        "p": "topic.entity_id",
+        "pt": "msg",
+        "to": "topic",
+        "tot": "msg"
+    }],
+    "action": "",
+    "property": "",
+    "from": "",
+    "to": "",
+    "reg": false,
+    "x": 1279,
+    "y": 1200,
+    "wires": [
+        ["49d3943c.371d7c"]
+    ]
+}, {
+    "id": "d86e52d9.a0395",
+    "type": "link out",
+    "z": "37b9ed44.115ca2",
+    "name": "iOS Notify",
+    "links": ["c0307220.88946"],
+    "x": 1601,
+    "y": 1229,
+    "wires": [],
+    "l": true
+}, {
+    "id": "cdc58610.6f4248",
+    "type": "api-call-service",
+    "z": "37b9ed44.115ca2",
+    "name": "Announce Family Room",
+    "server": "bea6337e.54ee7",
+    "version": 1,
+    "debugenabled": false,
+    "service_domain": "notify",
+    "service": "alexa_media_echo_family_room",
+    "entityId": "",
+    "data": "{\"message\":\"{{flow.msg_text}}\",\"data\":{\"type\":\"tts\"}}",
+    "dataType": "json",
+    "mergecontext": "",
+    "output_location": "",
+    "output_location_type": "none",
+    "mustacheAltTags": false,
+    "x": 1653,
+    "y": 1172,
+    "wires": [
+        []
+    ]
+}, {
+    "id": "1e707890.6f1bb7",
+    "type": "comment",
+    "z": "37b9ed44.115ca2",
+    "name": "UC: leave home, forget to close garage door",
+    "info": "",
+    "x": 246,
+    "y": 1053,
+    "wires": []
+}, {
+    "id": "bea6337e.54ee7",
+    "type": "server",
+    "z": "",
+    "name": "Home Assistant",
+    "legacy": false,
+    "addon": false,
+    "rejectUnauthorizedCerts": true,
+    "ha_boolean": "y|yes|true|on|home|open",
+    "connectionDelay": true,
+    "cacheJson": true
+}]
