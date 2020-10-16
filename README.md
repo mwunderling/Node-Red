@@ -4,6 +4,6 @@
 - bp_heating examples discussed [here](https://mwunderling.com/blog/smartheating.html)
 - bp_haauto examples discussed [here](https://mwunderling.com)
 
- These are importable into Node-RED.
+Each can be imported into Node-RED.
 
  
