@@ -1,0 +1,313 @@
+[{
+    "id": "da53f9aa.bfaa58",
+    "type": "comment",
+    "z": "37b9ed44.115ca2",
+    "name": "Washing Machine Notifications",
+    "info": "",
+    "x": 220,
+    "y": 3625,
+    "wires": []
+}, {
+    "id": "8410c8bf.70c858",
+    "type": "api-current-state",
+    "z": "37b9ed44.115ca2",
+    "name": "Still Complete?",
+    "server": "bea6337e.54ee7",
+    "version": 1,
+    "outputs": 2,
+    "halt_if": "Complete",
+    "halt_if_type": "str",
+    "halt_if_compare": "is",
+    "override_topic": false,
+    "entity_id": "sensor.washing_machine_cycle",
+    "state_type": "str",
+    "state_location": "",
+    "override_payload": "none",
+    "entity_location": "data",
+    "override_data": "msg",
+    "blockInputOverrides": false,
+    "x": 230,
+    "y": 3818,
+    "wires": [
+        ["d90d4bd9.4ff2f8"],
+        []
+    ]
+}, {
+    "id": "1c99804.b227c8",
+    "type": "server-state-changed",
+    "z": "37b9ed44.115ca2",
+    "name": "Wash Cycle - Complete?",
+    "server": "bea6337e.54ee7",
+    "version": 1,
+    "exposeToHomeAssistant": false,
+    "haConfig": [{
+        "property": "name",
+        "value": ""
+    }, {
+        "property": "icon",
+        "value": ""
+    }],
+    "entityidfilter": "sensor.washing_machine_cycle",
+    "entityidfiltertype": "exact",
+    "outputinitially": false,
+    "state_type": "str",
+    "haltifstate": "Complete",
+    "halt_if_type": "str",
+    "halt_if_compare": "is",
+    "outputs": 2,
+    "output_only_on_state_change": true,
+    "x": 200,
+    "y": 3764,
+    "wires": [
+        ["d90d4bd9.4ff2f8", "b848dd3.752a42"],
+        []
+    ]
+}, {
+    "id": "ff4b7c72.37914",
+    "type": "delay",
+    "z": "37b9ed44.115ca2",
+    "name": "Loop every 30mins",
+    "pauseType": "delay",
+    "timeout": "30",
+    "timeoutUnits": "minutes",
+    "rate": "1",
+    "nbRateUnits": "1",
+    "rateUnits": "second",
+    "randomFirst": "1",
+    "randomLast": "5",
+    "randomUnits": "seconds",
+    "drop": false,
+    "x": 790,
+    "y": 3794,
+    "wires": [
+        ["55b2855.b643b7c"]
+    ]
+}, {
+    "id": "56edd7ff.8f4d08",
+    "type": "api-current-state",
+    "z": "37b9ed44.115ca2",
+    "name": "Someone Home?",
+    "server": "bea6337e.54ee7",
+    "version": 1,
+    "outputs": 2,
+    "halt_if": "home",
+    "halt_if_type": "str",
+    "halt_if_compare": "is",
+    "override_topic": false,
+    "entity_id": "group.home",
+    "state_type": "str",
+    "state_location": "payload",
+    "override_payload": "msg",
+    "entity_location": "data",
+    "override_data": "msg",
+    "blockInputOverrides": false,
+    "x": 587,
+    "y": 3754,
+    "wires": [
+        ["ff4b7c72.37914", "e80b0e6b.0da98"],
+        ["ff4b7c72.37914"]
+    ]
+}, {
+    "id": "d90d4bd9.4ff2f8",
+    "type": "time-range-switch",
+    "z": "37b9ed44.115ca2",
+    "name": "7:00-22:00",
+    "lat": "",
+    "lon": "",
+    "startTime": "07:00",
+    "endTime": "22:00",
+    "startOffset": 0,
+    "endOffset": 0,
+    "x": 407,
+    "y": 3786,
+    "wires": [
+        ["56edd7ff.8f4d08"],
+        ["ff4b7c72.37914"]
+    ]
+}, {
+    "id": "dc421a5c.654728",
+    "type": "api-current-state",
+    "z": "37b9ed44.115ca2",
+    "name": "Mark Home?",
+    "server": "bea6337e.54ee7",
+    "version": 1,
+    "outputs": 2,
+    "halt_if": "home",
+    "halt_if_type": "str",
+    "halt_if_compare": "is",
+    "override_topic": false,
+    "entity_id": "person.mark",
+    "state_type": "str",
+    "state_location": "payload",
+    "override_payload": "msg",
+    "entity_location": "topic",
+    "override_data": "msg",
+    "blockInputOverrides": false,
+    "x": 1013,
+    "y": 3624,
+    "wires": [
+        ["494672e5.65312c"],
+        []
+    ]
+}, {
+    "id": "10e1a14a.7eef7f",
+    "type": "api-current-state",
+    "z": "37b9ed44.115ca2",
+    "name": "Melissa Home?",
+    "server": "bea6337e.54ee7",
+    "version": 1,
+    "outputs": 2,
+    "halt_if": "home",
+    "halt_if_type": "str",
+    "halt_if_compare": "is",
+    "override_topic": false,
+    "entity_id": "person.melissa",
+    "state_type": "str",
+    "state_location": "payload",
+    "override_payload": "msg",
+    "entity_location": "topic",
+    "override_data": "msg",
+    "blockInputOverrides": false,
+    "x": 1021,
+    "y": 3676,
+    "wires": [
+        ["494672e5.65312c"],
+        []
+    ]
+}, {
+    "id": "55b2855.b643b7c",
+    "type": "link out",
+    "z": "37b9ed44.115ca2",
+    "name": "",
+    "links": ["9e666da8.4bd12"],
+    "x": 908,
+    "y": 3795,
+    "wires": []
+}, {
+    "id": "9e666da8.4bd12",
+    "type": "link in",
+    "z": "37b9ed44.115ca2",
+    "name": "wash_cycle_done",
+    "links": ["55b2855.b643b7c"],
+    "x": 118,
+    "y": 3818,
+    "wires": [
+        ["8410c8bf.70c858"]
+    ]
+}, {
+    "id": "43294b8b.27d624",
+    "type": "link out",
+    "z": "37b9ed44.115ca2",
+    "name": "",
+    "links": ["c0307220.88946"],
+    "x": 1331,
+    "y": 3640,
+    "wires": []
+}, {
+    "id": "cdd7cb52.bfa158",
+    "type": "api-call-service",
+    "z": "37b9ed44.115ca2",
+    "name": "Announce Family Room",
+    "server": "bea6337e.54ee7",
+    "version": 1,
+    "debugenabled": false,
+    "service_domain": "notify",
+    "service": "alexa_media_echo_family_room",
+    "entityId": "",
+    "data": "{\"message\":\"{{flow.msg_text}}\",\"data\":{\"type\":\"tts\"}}",
+    "dataType": "json",
+    "mergecontext": "",
+    "output_location": "",
+    "output_location_type": "none",
+    "mustacheAltTags": false,
+    "x": 1051,
+    "y": 3726,
+    "wires": [
+        []
+    ]
+}, {
+    "id": "fae358e8.405b98",
+    "type": "api-call-service",
+    "z": "37b9ed44.115ca2",
+    "name": "Announce Office",
+    "server": "bea6337e.54ee7",
+    "version": 1,
+    "debugenabled": false,
+    "service_domain": "notify",
+    "service": "alexa_media_echodot_office",
+    "entityId": "",
+    "data": "{\"message\":\"{{flow.msg_text}}\",\"data\":{\"type\":\"tts\"}}",
+    "dataType": "json",
+    "mergecontext": "",
+    "output_location": "",
+    "output_location_type": "none",
+    "mustacheAltTags": false,
+    "x": 1020,
+    "y": 3775,
+    "wires": [
+        []
+    ]
+}, {
+    "id": "b848dd3.752a42",
+    "type": "change",
+    "z": "37b9ed44.115ca2",
+    "name": "Set counter",
+    "rules": [{
+        "t": "set",
+        "p": "msg_count",
+        "pt": "flow",
+        "to": "0",
+        "tot": "num"
+    }],
+    "action": "",
+    "property": "",
+    "from": "",
+    "to": "",
+    "reg": false,
+    "x": 409,
+    "y": 3734,
+    "wires": [
+        []
+    ]
+}, {
+    "id": "e80b0e6b.0da98",
+    "type": "function",
+    "z": "37b9ed44.115ca2",
+    "name": "Set messages",
+    "func": "var counter = flow.get(\"msg_count\");\n\nif (counter == 0) {\n    flow.set([\"msg_type\"], [\"Notification\"]);\n    flow.set([\"msg_text\"], [\"The washing machine is done\"]);\n} else {\n    flow.set([\"msg_type\"], [\"Reminder \" + (counter)]);\n    flow.set([\"msg_text\"], [\"The washer still needs unloading\"]);\n    flow.set([\"msg_count\"], [counter + 1]);\n}\n\nreturn msg\n\n",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "x": 784,
+    "y": 3699,
+    "wires": [
+        ["fae358e8.405b98", "dc421a5c.654728", "10e1a14a.7eef7f", "cdd7cb52.bfa158"]
+    ]
+}, {
+    "id": "494672e5.65312c",
+    "type": "function",
+    "z": "37b9ed44.115ca2",
+    "name": "Mod msg.topic",
+    "func": "//modify msg.topic\n\nif (msg.topic.entity_id == \"person.melissa\") {\n    msg.topic = \"mobile_app_iphonexr_melissa\";\n} else {\n    msg.topic = \"mobile_app_iphonexr_mark\";\n}\n\nreturn msg\n",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "x": 1214,
+    "y": 3640,
+    "wires": [
+        ["43294b8b.27d624"]
+    ]
+}, {
+    "id": "bea6337e.54ee7",
+    "type": "server",
+    "z": "",
+    "name": "Home Assistant",
+    "legacy": false,
+    "addon": false,
+    "rejectUnauthorizedCerts": true,
+    "ha_boolean": "y|yes|true|on|home|open",
+    "connectionDelay": true,
+    "cacheJson": true
+}]
