@@ -1,0 +1,69 @@
+[{
+    "id": "c9534f7.30d39b",
+    "type": "api-call-service",
+    "z": "37b9ed44.115ca2",
+    "name": "Send to Phone",
+    "server": "bea6337e.54ee7",
+    "version": 1,
+    "debugenabled": false,
+    "service_domain": "notify",
+    "service": "{{topic}}",
+    "entityId": "",
+    "data": "{}",
+    "dataType": "json",
+    "mergecontext": "",
+    "output_location": "",
+    "output_location_type": "none",
+    "mustacheAltTags": false,
+    "x": 530,
+    "y": 3240,
+    "wires": [
+        []
+    ]
+}, {
+    "id": "4ebf33de.7e2a6c",
+    "type": "function",
+    "z": "37b9ed44.115ca2",
+    "name": "Assemble iOS Msg",
+    "func": "//var name = flow.get('alert_name')\n\n//var message1 = flow.get('message1')\n//var message2 = flow.get('friendly_name')  \n//var message3 = flow.get('message3')\n//var sound = flow.get('sound')\n//var target = flow.get('target')\n\n\n//var final_msg = `${message1}` + `${message2}` + `${message3}`\n\nvar msg_final = flow.get('msg_text')\nvar msg_title = flow.get('msg_type')\n//var target = msg.topic.entity_id\nvar target = msg.topic\n\nvar payload = {\"data\":\n{\n    \"message\": `${msg_final}`,\n    \"title\": `${msg_title}`,\n    \"data\": {\n        \"sound\": \"Glass.caf\"\n    }\n}\n}\n\nmsg.payload = payload\nmsg.topic = `${target}`\nreturn msg\n\n\n//{\"message\":\"Ok to Open Doors & Windows T3\",\"title\":\"Notification\",\"data\":{\"push\":{\"sound\":\"Glass.caf\"}}}",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "x": 327,
+    "y": 3240,
+    "wires": [
+        ["c9534f7.30d39b"]
+    ]
+}, {
+    "id": "c0307220.88946",
+    "type": "link in",
+    "z": "37b9ed44.115ca2",
+    "name": "ios_notify",
+    "links": ["6a722009.5794f", "ec1e5843.4b18e8", "76acbcaf.771554", "917f8662.3b5b18", "d86e52d9.a0395", "90ecf51.ff6c808", "a989b798.453c28", "677f672.db9de98", "7a00fd21.f41714", "4fc287b7.167548", "77c7a364.72dc9c", "5120d06.3a2e53", "53272bd5.85e5f4", "43294b8b.27d624"],
+    "x": 195,
+    "y": 3240,
+    "wires": [
+        ["4ebf33de.7e2a6c"]
+    ]
+}, {
+    "id": "383d8084.7c5b7",
+    "type": "comment",
+    "z": "37b9ed44.115ca2",
+    "name": "Build & Send Notifications",
+    "info": "",
+    "x": 189,
+    "y": 3170,
+    "wires": []
+}, {
+    "id": "bea6337e.54ee7",
+    "type": "server",
+    "z": "",
+    "name": "Home Assistant",
+    "legacy": false,
+    "addon": false,
+    "rejectUnauthorizedCerts": true,
+    "ha_boolean": "y|yes|true|on|home|open",
+    "connectionDelay": true,
+    "cacheJson": true
+}]
