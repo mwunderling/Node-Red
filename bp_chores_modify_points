@@ -1,0 +1,186 @@
+[{
+    "id": "d8d36b4c.73e018",
+    "type": "server-state-changed",
+    "z": "c97206b0.e99878",
+    "name": "Nacho Duties",
+    "server": "bea6337e.54ee7",
+    "version": 1,
+    "exposeToHomeAssistant": false,
+    "haConfig": [{
+        "property": "name",
+        "value": ""
+    }, {
+        "property": "icon",
+        "value": ""
+    }],
+    "entityidfilter": "input_boolean.sydney_kitty_duties",
+    "entityidfiltertype": "exact",
+    "outputinitially": false,
+    "state_type": "str",
+    "haltifstate": "on",
+    "halt_if_type": "str",
+    "halt_if_compare": "is",
+    "outputs": 2,
+    "output_only_on_state_change": true,
+    "for": "",
+    "forType": "num",
+    "forUnits": "minutes",
+    "ignorePrevStateNull": false,
+    "ignorePrevStateUnknown": false,
+    "ignorePrevStateUnavailable": false,
+    "ignoreCurrentStateUnknown": false,
+    "ignoreCurrentStateUnavailable": false,
+    "x": 235,
+    "y": 4704,
+    "wires": [
+        ["11ba6a90.909095"],
+        ["9318ee37.d5c1c"]
+    ]
+}, {
+    "id": "11ba6a90.909095",
+    "type": "api-call-service",
+    "z": "c97206b0.e99878",
+    "name": "Increase Points - Sydney",
+    "server": "bea6337e.54ee7",
+    "version": 1,
+    "debugenabled": false,
+    "service_domain": "input_number",
+    "service": "increment",
+    "entityId": "input_number.points_this_week_4sydney",
+    "data": "",
+    "dataType": "json",
+    "mergecontext": "",
+    "output_location": "payload",
+    "output_location_type": "msg",
+    "mustacheAltTags": false,
+    "x": 491,
+    "y": 4705,
+    "wires": [
+        []
+    ]
+}, {
+    "id": "9e5ac8ae.c900e8",
+    "type": "api-call-service",
+    "z": "c97206b0.e99878",
+    "name": "Decrease Points - Sydney",
+    "server": "bea6337e.54ee7",
+    "version": 1,
+    "debugenabled": false,
+    "service_domain": "input_number",
+    "service": "decrement",
+    "entityId": "input_number.points_this_week_4sydney",
+    "data": "",
+    "dataType": "json",
+    "mergecontext": "",
+    "output_location": "payload",
+    "output_location_type": "msg",
+    "mustacheAltTags": false,
+    "x": 725,
+    "y": 4751,
+    "wires": [
+        []
+    ]
+}, {
+    "id": "15764936.17e337",
+    "type": "server-state-changed",
+    "z": "c97206b0.e99878",
+    "name": "Empty Dishwasher",
+    "server": "bea6337e.54ee7",
+    "version": 1,
+    "exposeToHomeAssistant": false,
+    "haConfig": [{
+        "property": "name",
+        "value": ""
+    }, {
+        "property": "icon",
+        "value": ""
+    }],
+    "entityidfilter": "input_boolean.sydney_empty_dishwasher",
+    "entityidfiltertype": "exact",
+    "outputinitially": false,
+    "state_type": "str",
+    "haltifstate": "on",
+    "halt_if_type": "str",
+    "halt_if_compare": "is",
+    "outputs": 2,
+    "output_only_on_state_change": true,
+    "for": "",
+    "forType": "num",
+    "forUnits": "minutes",
+    "ignorePrevStateNull": false,
+    "ignorePrevStateUnknown": false,
+    "ignorePrevStateUnavailable": false,
+    "ignoreCurrentStateUnknown": false,
+    "ignoreCurrentStateUnavailable": false,
+    "x": 214,
+    "y": 4752,
+    "wires": [
+        ["11ba6a90.909095"],
+        ["9318ee37.d5c1c"]
+    ]
+}, {
+    "id": "9318ee37.d5c1c",
+    "type": "time-range-switch",
+    "z": "c97206b0.e99878",
+    "name": "",
+    "lat": "37.33259",
+    "lon": "-121.88989",
+    "startTime": "00:01",
+    "endTime": "23:59",
+    "startOffset": "0",
+    "endOffset": 0,
+    "x": 451,
+    "y": 4752,
+    "wires": [
+        ["9e5ac8ae.c900e8"],
+        []
+    ]
+}, {
+    "id": "e90c5099.f7e94",
+    "type": "server-state-changed",
+    "z": "c97206b0.e99878",
+    "name": "5min Pickup",
+    "server": "bea6337e.54ee7",
+    "version": 1,
+    "exposeToHomeAssistant": false,
+    "haConfig": [{
+        "property": "name",
+        "value": ""
+    }, {
+        "property": "icon",
+        "value": ""
+    }],
+    "entityidfilter": "input_boolean.sydney_5min_pickup",
+    "entityidfiltertype": "exact",
+    "outputinitially": false,
+    "state_type": "str",
+    "haltifstate": "on",
+    "halt_if_type": "str",
+    "halt_if_compare": "is",
+    "outputs": 2,
+    "output_only_on_state_change": true,
+    "for": "",
+    "forType": "num",
+    "forUnits": "minutes",
+    "ignorePrevStateNull": false,
+    "ignorePrevStateUnknown": false,
+    "ignorePrevStateUnavailable": false,
+    "ignoreCurrentStateUnknown": false,
+    "ignoreCurrentStateUnavailable": false,
+    "x": 235,
+    "y": 4809,
+    "wires": [
+        ["11ba6a90.909095"],
+        ["9318ee37.d5c1c"]
+    ]
+}, {
+    "id": "bea6337e.54ee7",
+    "type": "server",
+    "name": "Home Assistant",
+    "legacy": false,
+    "addon": false,
+    "rejectUnauthorizedCerts": true,
+    "ha_boolean": "y|yes|true|on|home|open",
+    "connectionDelay": true,
+    "cacheJson": true
+}]
