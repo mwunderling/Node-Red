@@ -1,0 +1,145 @@
+[
+    {
+        "id": "ca3b62c3.0a882",
+        "type": "api-call-service",
+        "z": "c97206b0.e99878",
+        "name": "Media Center & Couch Lights - ON",
+        "server": "bea6337e.54ee7",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "switch",
+        "service": "turn_on",
+        "entityId": "switch.entertainment_center_lights, switch.family_room_couch_light",
+        "data": "",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "payload",
+        "output_location_type": "msg",
+        "mustacheAltTags": false,
+        "x": 1860,
+        "y": 1916,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "156c1f0f.b08691",
+        "type": "server-state-changed",
+        "z": "c97206b0.e99878",
+        "name": "Family Room Ceiling Lights",
+        "server": "bea6337e.54ee7",
+        "version": 1,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "light.family_room_ceiling_lights",
+        "entityidfiltertype": "exact",
+        "outputinitially": false,
+        "state_type": "str",
+        "haltifstate": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "for": "",
+        "forType": "num",
+        "forUnits": "minutes",
+        "ignorePrevStateNull": false,
+        "ignorePrevStateUnknown": false,
+        "ignorePrevStateUnavailable": false,
+        "ignoreCurrentStateUnknown": false,
+        "ignoreCurrentStateUnavailable": false,
+        "x": 1362,
+        "y": 1944,
+        "wires": [
+            [
+                "fcef55c3.033c48"
+            ],
+            [
+                "cbf4aff1.30fe2"
+            ]
+        ]
+    },
+    {
+        "id": "80351af.a0843e8",
+        "type": "api-call-service",
+        "z": "c97206b0.e99878",
+        "name": "Media Center & Couch Lights - OFF",
+        "server": "bea6337e.54ee7",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "switch",
+        "service": "turn_off",
+        "entityId": "switch.entertainment_center_lights, switch.family_room_couch_light",
+        "data": "",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "payload",
+        "output_location_type": "msg",
+        "mustacheAltTags": false,
+        "x": 1862,
+        "y": 1966,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "fcef55c3.033c48",
+        "type": "time-range-switch",
+        "z": "c97206b0.e99878",
+        "name": "",
+        "lat": "37.3345259",
+        "lon": "-121.8858392",
+        "startTime": "6:00",
+        "endTime": "21:30",
+        "startOffset": "",
+        "endOffset": 0,
+        "x": 1574,
+        "y": 1920,
+        "wires": [
+            [
+                "ca3b62c3.0a882"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "cbf4aff1.30fe2",
+        "type": "time-range-switch",
+        "z": "c97206b0.e99878",
+        "name": "",
+        "lat": "37.3345259",
+        "lon": "-121.8858392",
+        "startTime": "6:00",
+        "endTime": "21:30",
+        "startOffset": "",
+        "endOffset": 0,
+        "x": 1575,
+        "y": 1966,
+        "wires": [
+            [
+                "80351af.a0843e8"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "bea6337e.54ee7",
+        "type": "server",
+        "name": "Home Assistant",
+        "legacy": false,
+        "addon": false,
+        "rejectUnauthorizedCerts": true,
+        "ha_boolean": "y|yes|true|on|home|open",
+        "connectionDelay": true,
+        "cacheJson": true
+    }
+]
